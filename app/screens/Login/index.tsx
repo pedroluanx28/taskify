@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,10 +11,10 @@ import { NavigationScreens } from "../../routes/app.routes";
 import { FormControl } from "../../components/FormControl";
 import { SvgImage } from "../../components/SvgImage";
 
-import { styles } from "./styles";
-
 import LoginSvg from '../../assets/login.svg';
 import { useAsyncStorage } from "../../utils/hooks/useAsyncStorage";
+
+import { styles } from "./styles";
 
 type FormProps = {
     email: string;
@@ -46,12 +46,18 @@ export function Login() {
         try {
             const { data } = await api.post("/auth/login", values);
 
-            setItem("token", data.token);
+            await setItem("token", data.token);
+
             navigation.navigate("Home");
-            
+
             reset();
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            if (error.response.status === 422) {
+                Alert.alert("Falha ao logar", error.response.data.message);
+                return;
+            }
+
+            alert("Erro");
         }
     });
 
@@ -96,7 +102,7 @@ export function Login() {
                         onChangeText={onChange}
                         errorMessage={errors.password?.message}
                         value={value}
-                        isPassword
+                        mode="password"
                     />
                 )}
             />

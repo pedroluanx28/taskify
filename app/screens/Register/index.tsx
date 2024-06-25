@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
@@ -59,8 +59,13 @@ export function Register() {
             navigation.navigate("Home");
             
             reset();
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            if (error.response.status === 422) {
+                Alert.alert("Falha ao cadastrar", error.response.data.message);
+                return;
+            }
+
+            alert("Erro");
         }
     });
 
@@ -120,7 +125,7 @@ export function Register() {
                         onChangeText={onChange}
                         errorMessage={errors.password?.message}
                         value={value}
-                        isPassword
+                        mode="password"
                     />
                 )}
             />

@@ -7,15 +7,13 @@ export const styles = StyleSheet.create({
     },
     input: {
         width: "100%",
-        height: 50,
         borderWidth: 1,
         borderRadius: 7,
-        paddingLeft: 10,
-        paddingRight: 40,
     },
     errorMessage: {
         color: "#C62828",
         width: "100%",
+        fontFamily: theme.fonts.inter500,
     },
     label: {
         marginBottom: 5,
@@ -29,5 +27,13 @@ export const styles = StyleSheet.create({
         bottom: 0,
         paddingHorizontal: 10,
         justifyContent: "center",
-    }
+    },
+    calendarIcon: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        paddingHorizontal: 14,
+        justifyContent: "center",
+    },
 });

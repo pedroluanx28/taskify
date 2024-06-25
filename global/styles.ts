@@ -9,6 +9,7 @@ export const theme = {
     },
     fonts: {
         kanit400: "Kanit_400Regular",
+        kanit500: "Kanit_500Medium",
         inter500: "Inter_500Medium",
         inter700: "Inter_700Bold",
         poppins600: "Poppins_600SemiBold",
